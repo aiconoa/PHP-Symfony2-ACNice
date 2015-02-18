@@ -1,0 +1,11 @@
+logout:
+    path:   /logout
+
+aiconoa_user:
+    resource: "@AiconoaUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: @AppBundle/Controller/
+    type:     annotation

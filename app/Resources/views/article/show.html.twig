@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="blog-post">
+        <h2 class="blog-post-title">{{ article.title }}</h2>
+        <p class="blog-post-meta">{{ article.createOn | date("m/d/Y") }} by <a href="#">anonymous</a></p>
+        {{ article.content | raw }}
+    </div><!-- /.blog-post -->
+{% endblock %}

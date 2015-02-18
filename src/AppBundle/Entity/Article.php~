@@ -1,0 +1,145 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Aiconoa\UserBundle\Entity\User;
+use AppBundle\AppBundle;
+use Doctrine\ORM\Mapping as ORM;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Class Article
+ * @package AppBundle\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\ArticleRepository")
+ */
+class Article {
+
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\Length(min=3, max=10)
+     * @Assert\NotBlank()
+     */
+    protected $title;
+
+    /**
+     * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     */
+    protected $content;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $createOn;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Aiconoa\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="author", referencedColumnName="id")
+     * @var User
+     */
+    protected $author;
+
+
+    function __construct()
+    {
+        $this->createOn = new \DateTime();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Article
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     * @return Article
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string 
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set createOn
+     *
+     * @param \DateTime $createOn
+     * @return Article
+     */
+    public function setCreateOn($createOn)
+    {
+        $this->createOn = $createOn;
+
+        return $this;
+    }
+
+    /**
+     * Get createOn
+     *
+     * @return \DateTime 
+     */
+    public function getCreateOn()
+    {
+        return $this->createOn;
+    }
+
+
+    /**
+     * Returns an excerpt of the article
+     * @param int $length
+     * @return string
+     */
+    public function getExcerpt($length = 100) {
+        return substr($this->content,0, $length);
+    }
+}
